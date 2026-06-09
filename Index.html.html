@@ -1,0 +1,589 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Andreas' Haus & Garten Service – Entrümpelung & Gartenarbeiten</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --green-dark: #1a2e1a;
+    --green-mid:  #2d4a1e;
+    --green-light:#a8c090;
+    --gold:       #e8b84b;
+    --gold-light: #f5d98a;
+    --cream:      #f2ede4;
+    --cream-dark: #e8e2d8;
+    --text:       #2a2a2a;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Lato', sans-serif;
+    background: var(--cream);
+    color: var(--text);
+    overflow-x: hidden;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: var(--green-dark);
+    border-bottom: 3px solid var(--gold);
+    padding: 14px 40px;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .nav-logo {
+    display: flex; align-items: center; gap: 14px;
+  }
+  .nav-badge {
+    background: var(--gold); color: var(--green-dark);
+    font-family: 'Playfair Display', serif;
+    font-size: 1.1rem; font-weight: 900; letter-spacing: 3px;
+    padding: 6px 12px; border-radius: 6px;
+  }
+  .nav-name {
+    color: var(--gold);
+    font-family: 'Playfair Display', serif;
+    font-size: 0.95rem; letter-spacing: 1px;
+  }
+  .nav-links { display: flex; gap: 28px; }
+  .nav-links a {
+    color: var(--green-light); text-decoration: none;
+    font-size: 0.8rem; letter-spacing: 2px; text-transform: uppercase;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--gold); }
+
+  /* ── HERO ── */
+  #hero {
+    min-height: 100vh;
+    background: linear-gradient(160deg, var(--green-dark) 0%, var(--green-mid) 60%, #3a5c28 100%);
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    text-align: center; padding: 120px 24px 80px;
+    position: relative; overflow: hidden;
+  }
+  #hero::before {
+    content: '';
+    position: absolute; top: -100px; right: -100px;
+    width: 500px; height: 500px; border-radius: 50%;
+    background: radial-gradient(circle, rgba(232,184,75,0.08) 0%, transparent 70%);
+  }
+  #hero::after {
+    content: '';
+    position: absolute; bottom: -80px; left: -80px;
+    width: 400px; height: 400px; border-radius: 50%;
+    background: radial-gradient(circle, rgba(168,192,144,0.07) 0%, transparent 70%);
+  }
+  .hero-tag {
+    color: var(--gold); font-size: 0.7rem; letter-spacing: 4px;
+    text-transform: uppercase; margin-bottom: 20px;
+    border: 1px solid rgba(232,184,75,0.3); padding: 6px 18px; border-radius: 20px;
+    display: inline-block;
+  }
+  .hero-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2.2rem, 6vw, 4.5rem);
+    color: #fff; line-height: 1.15; margin-bottom: 12px;
+  }
+  .hero-title span { color: var(--gold); font-style: italic; }
+  .hero-sub {
+    color: var(--green-light); font-size: 1rem;
+    letter-spacing: 3px; text-transform: uppercase;
+    margin-bottom: 36px;
+  }
+  .hero-desc {
+    color: rgba(255,255,255,0.75); max-width: 520px;
+    font-size: 1.05rem; line-height: 1.7; margin-bottom: 44px;
+  }
+  .btn-primary {
+    background: var(--gold); color: var(--green-dark);
+    padding: 14px 36px; border-radius: 8px;
+    font-weight: 700; font-size: 0.95rem; letter-spacing: 1px;
+    text-decoration: none; display: inline-block;
+    transition: transform 0.2s, box-shadow 0.2s;
+    box-shadow: 0 4px 20px rgba(232,184,75,0.3);
+  }
+  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 28px rgba(232,184,75,0.4); }
+  .btn-secondary {
+    color: var(--green-light); border: 1px solid rgba(168,192,144,0.4);
+    padding: 14px 36px; border-radius: 8px;
+    font-size: 0.95rem; letter-spacing: 1px;
+    text-decoration: none; display: inline-block; margin-left: 14px;
+    transition: border-color 0.2s, color 0.2s;
+  }
+  .btn-secondary:hover { border-color: var(--gold); color: var(--gold); }
+
+  /* ── SECTION COMMON ── */
+  section { padding: 90px 24px; }
+  .section-label {
+    font-size: 0.68rem; letter-spacing: 4px; text-transform: uppercase;
+    color: var(--gold); margin-bottom: 10px;
+  }
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.8rem, 4vw, 2.8rem);
+    color: var(--green-dark); line-height: 1.2;
+  }
+  .section-title.light { color: #fff; }
+  .container { max-width: 1100px; margin: 0 auto; }
+
+  /* ── LEISTUNGEN ── */
+  #leistungen { background: var(--cream); }
+  .leistungen-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 28px; margin-top: 52px;
+  }
+  .leistung-card {
+    background: #fff;
+    border: 1px solid rgba(45,74,30,0.12);
+    border-radius: 14px; padding: 36px 30px;
+    position: relative; overflow: hidden;
+    transition: transform 0.25s, box-shadow 0.25s;
+  }
+  .leistung-card:hover { transform: translateY(-4px); box-shadow: 0 12px 32px rgba(26,46,26,0.1); }
+  .leistung-card::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px;
+    background: linear-gradient(90deg, var(--green-mid), var(--gold));
+  }
+  .leistung-icon {
+    font-size: 2.4rem; margin-bottom: 18px; display: block;
+  }
+  .leistung-card h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.3rem; color: var(--green-dark); margin-bottom: 12px;
+  }
+  .leistung-card p { color: #666; font-size: 0.9rem; line-height: 1.7; }
+  .leistung-list { list-style: none; margin-top: 14px; }
+  .leistung-list li {
+    color: #555; font-size: 0.87rem; padding: 4px 0;
+    padding-left: 18px; position: relative;
+  }
+  .leistung-list li::before {
+    content: '✓'; position: absolute; left: 0;
+    color: var(--gold); font-weight: bold;
+  }
+
+  /* ── ÜBER UNS ── */
+  #ueber {
+    background: linear-gradient(135deg, var(--green-dark) 0%, var(--green-mid) 100%);
+  }
+  .ueber-inner {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center;
+  }
+  .ueber-text p {
+    color: rgba(255,255,255,0.75); font-size: 1rem; line-height: 1.8;
+    margin-bottom: 16px;
+  }
+  .ueber-values {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 36px;
+  }
+  .value-item {
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(232,184,75,0.2);
+    border-radius: 10px; padding: 20px;
+  }
+  .value-item .icon { font-size: 1.6rem; margin-bottom: 8px; display: block; }
+  .value-item h4 {
+    color: var(--gold); font-size: 0.85rem; letter-spacing: 1px; margin-bottom: 4px;
+  }
+  .value-item p { color: var(--green-light); font-size: 0.8rem; line-height: 1.5; margin: 0; }
+  .ueber-badge-box {
+    background: rgba(232,184,75,0.08);
+    border: 1.5px solid rgba(232,184,75,0.25);
+    border-radius: 16px; padding: 44px 36px;
+    text-align: center;
+  }
+  .big-badge {
+    background: var(--gold); color: var(--green-dark);
+    font-family: 'Playfair Display', serif;
+    font-size: 3.5rem; font-weight: 900; letter-spacing: 6px;
+    padding: 20px 36px; border-radius: 12px;
+    display: inline-block; margin-bottom: 24px;
+  }
+  .ueber-badge-box p {
+    color: var(--green-light); font-size: 0.75rem;
+    letter-spacing: 3px; text-transform: uppercase;
+  }
+
+  /* ── KONTAKT ── */
+  #kontakt { background: var(--cream-dark); }
+  .kontakt-inner {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: start;
+  }
+  .kontakt-info h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.5rem; color: var(--green-dark); margin-bottom: 24px;
+  }
+  .kontakt-row {
+    display: flex; align-items: center; gap: 16px;
+    padding: 16px 0; border-bottom: 1px solid rgba(45,74,30,0.1);
+  }
+  .kontakt-icon {
+    width: 44px; height: 44px; border-radius: 10px;
+    background: var(--green-dark); display: flex; align-items: center;
+    justify-content: center; font-size: 1.1rem; flex-shrink: 0;
+  }
+  .kontakt-label { font-size: 0.7rem; letter-spacing: 2px; color: #999; text-transform: uppercase; }
+  .kontakt-value { font-size: 1rem; color: var(--green-dark); font-weight: 600; margin-top: 2px; }
+  .kontakt-value a { color: var(--green-dark); text-decoration: none; }
+  .kontakt-value a:hover { color: var(--gold); }
+
+  .kontakt-cta {
+    background: var(--green-dark);
+    border-radius: 16px; padding: 44px 36px; text-align: center;
+  }
+  .kontakt-cta h3 {
+    font-family: 'Playfair Display', serif;
+    color: #fff; font-size: 1.6rem; margin-bottom: 12px;
+  }
+  .kontakt-cta p { color: var(--green-light); font-size: 0.9rem; line-height: 1.6; margin-bottom: 28px; }
+  .btn-gold-big {
+    background: var(--gold); color: var(--green-dark);
+    padding: 16px 40px; border-radius: 10px;
+    font-weight: 700; font-size: 1.05rem;
+    text-decoration: none; display: inline-block;
+    transition: transform 0.2s, box-shadow 0.2s;
+    box-shadow: 0 4px 20px rgba(232,184,75,0.35);
+  }
+  .btn-gold-big:hover { transform: translateY(-2px); box-shadow: 0 8px 28px rgba(232,184,75,0.5); }
+  .tel-big {
+    display: block; color: var(--gold);
+    font-size: 1.4rem; font-weight: 700; letter-spacing: 1px;
+    margin-top: 20px; text-decoration: none;
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    background: var(--green-dark);
+    border-top: 3px solid var(--gold);
+    padding: 32px 40px;
+    display: flex; align-items: center; justify-content: space-between;
+    flex-wrap: wrap; gap: 16px;
+  }
+  footer .nav-badge { font-size: 0.9rem; padding: 5px 10px; }
+  footer p { color: var(--green-light); font-size: 0.8rem; }
+  footer a { color: var(--green-light); text-decoration: none; font-size: 0.8rem; }
+  footer a:hover { color: var(--gold); }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 768px) {
+    .nav-links { display: none; }
+    .ueber-inner, .kontakt-inner { grid-template-columns: 1fr; }
+    .ueber-values { grid-template-columns: 1fr; }
+    .btn-secondary { margin-left: 0; margin-top: 12px; display: block; text-align: center; }
+    footer { flex-direction: column; text-align: center; }
+  }
+
+  /* ── ANIMATIONS ── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  .hero-tag  { animation: fadeUp 0.6s ease both; }
+  .hero-title{ animation: fadeUp 0.7s 0.1s ease both; }
+  .hero-sub  { animation: fadeUp 0.7s 0.2s ease both; }
+  .hero-desc { animation: fadeUp 0.7s 0.3s ease both; }
+  .hero-btns { animation: fadeUp 0.7s 0.4s ease both; }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">
+    <div class="nav-badge">AHG</div>
+    <div class="nav-name">Andreas' Haus & Garten Service</div>
+  </div>
+  <div class="nav-links">
+    <a href="#leistungen">Leistungen</a>
+    <a href="#ueber">Über mich</a>
+    <a href="#kontakt">Kontakt</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-tag">Ihr zuverlässiger Partner vor Ort</div>
+  <h1 class="hero-title">Entrümpelung &amp;<br><span>Gartenarbeiten</span></h1>
+  <p class="hero-sub">Schnell · Zuverlässig · Fair</p>
+  <p class="hero-desc">
+    Von der Haushaltsauflösung bis zum gepflegten Garten – Andreas' Haus &amp; Garten Service übernimmt die Aufgaben, für die Sie keine Zeit oder Kraft haben.
+  </p>
+  <div class="hero-btns">
+    <a href="#kontakt" class="btn-primary">Jetzt anfragen</a>
+    <a href="#leistungen" class="btn-secondary">Leistungen ansehen</a>
+  </div>
+</section>
+
+<!-- LEISTUNGEN -->
+<section id="leistungen">
+  <div class="container">
+    <p class="section-label">Was wir anbieten</p>
+    <h2 class="section-title">Unsere Leistungen</h2>
+    <div class="leistungen-grid">
+
+      <div class="leistung-card">
+        <span class="leistung-icon">🏠</span>
+        <h3>Entrümpelung</h3>
+        <p>Professionelle und diskrete Entrümpelung von Wohnungen, Häusern, Kellern und Dachböden.</p>
+        <ul class="leistung-list">
+          <li>Wohnungsauflösung</li>
+          <li>Keller &amp; Dachboden</li>
+          <li>Entrümpelung nach Todesfall</li>
+          <li>Sperrmüllentsorgung</li>
+        </ul>
+      </div>
+
+      <div class="leistung-card">
+        <span class="leistung-icon">📦</span>
+        <h3>Haushaltsauflösung</h3>
+        <p>Komplette Haushaltsauflösung – schnell, sauber und zu fairen Preisen.</p>
+        <ul class="leistung-list">
+          <li>Komplette Räumung</li>
+          <li>Möbeltransport &amp; Entsorgung</li>
+          <li>Besenreine Übergabe</li>
+          <li>Wertanrechnung möglich</li>
+        </ul>
+      </div>
+
+      <div class="leistung-card">
+        <span class="leistung-icon">🌿</span>
+        <h3>Gartenarbeiten</h3>
+        <p>Damit Ihr Garten gepflegt aussieht – ohne dass Sie selbst Hand anlegen müssen.</p>
+        <ul class="leistung-list">
+          <li>Rasenmähen</li>
+          <li>Heckenschnitt</li>
+          <li>Unkraut jäten</li>
+          <li>Laubbeseitigung</li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ÜBER UNS -->
+<section id="ueber">
+  <div class="container">
+    <div class="ueber-inner">
+      <div class="ueber-text">
+        <p class="section-label">Über mich</p>
+        <h2 class="section-title light">Persönlich.<br>Zuverlässig.<br>Vor Ort.</h2>
+        <br>
+        <p>Ich bin Andreas Pawlik, Inhaber von AHG – Andreas' Haus &amp; Garten Service. Als Einzelunternehmer arbeite ich persönlich bei jedem Auftrag mit, denn mir liegt Qualität und Vertrauen am Herzen.</p>
+        <p>Ob spontane Anfrage oder geplante Haushaltsauflösung: Ich bin flexibel, pünktlich und hinterlasse nach getaner Arbeit Ordnung.</p>
+        <div class="ueber-values">
+          <div class="value-item">
+            <span class="icon">🤝</span>
+            <h4>Persönlich</h4>
+            <p>Kein Call-Center – Sie erreichen mich direkt.</p>
+          </div>
+          <div class="value-item">
+            <span class="icon">⚡</span>
+            <h4>Schnell</h4>
+            <p>Kurzfristige Termine nach Absprache möglich.</p>
+          </div>
+          <div class="value-item">
+            <span class="icon">💰</span>
+            <h4>Fair</h4>
+            <p>Transparente Preise, keine versteckten Kosten.</p>
+          </div>
+          <div class="value-item">
+            <span class="icon">🌍</span>
+            <h4>Regional</h4>
+            <p>Ihr Partner in Hamm und Umgebung.</p>
+          </div>
+        </div>
+      </div>
+      <div class="ueber-badge-box">
+        <div class="big-badge">AHG</div>
+        <p>Andreas' Haus &amp; Garten Service</p>
+        <br>
+        <p style="color:rgba(168,192,144,0.6); font-size:0.65rem; letter-spacing:2px; margin-top:8px;">ENTRÜMPELUNG · HAUSHALTSAUFLÖSUNG · GARTENARBEITEN</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- KONTAKT -->
+<section id="kontakt">
+  <div class="container">
+    <p class="section-label">Jetzt melden</p>
+    <h2 class="section-title" style="margin-bottom:52px;">Kontakt</h2>
+    <div class="kontakt-inner">
+      <div class="kontakt-info">
+        <h3>So erreichen Sie mich</h3>
+
+        <div class="kontakt-row">
+          <div class="kontakt-icon">📞</div>
+          <div>
+            <div class="kontakt-label">Telefon</div>
+            <div class="kontakt-value"><a href="tel:+491798676261">+49 179 8676261</a></div>
+          </div>
+        </div>
+
+        <div class="kontakt-row">
+          <div class="kontakt-icon">✉️</div>
+          <div>
+            <div class="kontakt-label">E-Mail</div>
+            <div class="kontakt-value"><a href="mailto:ahg.dienste@gmail.com">ahg.dienste@gmail.com</a></div>
+          </div>
+        </div>
+
+        <div class="kontakt-row">
+          <div class="kontakt-icon">🌐</div>
+          <div>
+            <div class="kontakt-label">Webseite</div>
+            <div class="kontakt-value"><a href="#">www.ahg-dienste.de</a></div>
+          </div>
+        </div>
+
+        <div class="kontakt-row">
+          <div class="kontakt-icon">📍</div>
+          <div>
+            <div class="kontakt-label">Einsatzgebiet</div>
+            <div class="kontakt-value">Hamm &amp; Umgebung</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="kontakt-cta">
+        <h3>Kostenlos anfragen</h3>
+        <p>Beschreiben Sie kurz Ihren Auftrag – ich melde mich schnellstmöglich mit einem unverbindlichen Angebot.</p>
+        <a href="mailto:ahg.dienste@gmail.com" class="btn-gold-big">📧 E-Mail schreiben</a>
+        <a href="tel:+491798676261" class="tel-big">📞 +49 179 8676261</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- IMPRESSUM -->
+<section id="impressum" style="background:#fff; padding: 60px 24px;">
+  <div class="container" style="max-width:800px;">
+    <p class="section-label">Rechtliches</p>
+    <h2 class="section-title" style="margin-bottom:36px;">Impressum</h2>
+
+    <h3 style="font-family:Georgia,serif;color:#1a2e1a;margin-bottom:8px;">Angaben gemäß § 5 TMG</h3>
+    <p style="color:#555;line-height:1.8;margin-bottom:24px;">
+      Andreas Pawlik<br>
+      Andreas' Haus &amp; Garten Service<br>
+      Alte Lünener Straße 92b<br>
+      59077 Hamm<br>
+      Deutschland
+    </p>
+
+    <h3 style="font-family:Georgia,serif;color:#1a2e1a;margin-bottom:8px;">Kontakt</h3>
+    <p style="color:#555;line-height:1.8;margin-bottom:24px;">
+      Telefon: <a href="tel:+491798676261" style="color:#2d4a1e;">+49 179 8676261</a><br>
+      E-Mail: <a href="mailto:ahg.dienste@gmail.com" style="color:#2d4a1e;">ahg.dienste@gmail.com</a><br>
+      Website: <a href="https://www.ahg-dienste.de" style="color:#2d4a1e;">www.ahg-dienste.de</a>
+    </p>
+
+    <h3 style="font-family:Georgia,serif;color:#1a2e1a;margin-bottom:8px;">Berufsbezeichnung</h3>
+    <p style="color:#555;line-height:1.8;margin-bottom:24px;">
+      Selbstständiger Gewerbetreibender<br>
+      Tätigkeitsbereich: Entrümpelung, Haushaltsauflösung, Gartenarbeiten
+    </p>
+
+    <h3 style="font-family:Georgia,serif;color:#1a2e1a;margin-bottom:8px;">Umsatzsteuer</h3>
+    <p style="color:#555;line-height:1.8;margin-bottom:24px;">
+      Als Kleinunternehmer gemäß § 19 UStG wird keine Umsatzsteuer berechnet.<br>
+      <em style="font-size:0.85rem;color:#999;">(Umsatzsteuer-ID sofern vorhanden hier eintragen)</em>
+    </p>
+
+    <h3 style="font-family:Georgia,serif;color:#1a2e1a;margin-bottom:8px;">Verantwortlich für den Inhalt gemäß § 18 Abs. 2 MStV</h3>
+    <p style="color:#555;line-height:1.8;margin-bottom:24px;">
+      Andreas Pawlik<br>
+      Alte Lünener Straße 92b<br>
+      59077 Hamm
+    </p>
+
+    <h3 style="font-family:Georgia,serif;color:#1a2e1a;margin-bottom:8px;">Haftungsausschluss</h3>
+    <p style="color:#555;line-height:1.8;margin-bottom:24px;">
+      Die Inhalte dieser Website wurden mit größter Sorgfalt erstellt. Für die Richtigkeit, Vollständigkeit und Aktualität der Inhalte übernehme ich keine Gewähr. Als Diensteanbieter bin ich gemäß § 7 Abs. 1 TMG für eigene Inhalte auf diesen Seiten nach den allgemeinen Gesetzen verantwortlich.
+    </p>
+
+    <h3 style="font-family:Georgia,serif;color:#1a2e1a;margin-bottom:8px;">Urheberrecht</h3>
+    <p style="color:#555;line-height:1.8;">
+      Die durch den Seitenbetreiber erstellten Inhalte und Werke auf dieser Website unterliegen dem deutschen Urheberrecht. Die Vervielfältigung, Bearbeitung, Verbreitung und jede Art der Verwertung außerhalb der Grenzen des Urheberrechtes bedürfen der schriftlichen Zustimmung des jeweiligen Autors.
+    </p>
+  </div>
+</section>
+
+<!-- DATENSCHUTZ -->
+<section id="datenschutz" style="background:#f8f6f0; padding: 60px 24px;">
+  <div class="container" style="max-width:800px;">
+    <p class="section-label">Rechtliches</p>
+    <h2 class="section-title" style="margin-bottom:36px;">Datenschutzerklärung</h2>
+
+    <h3 style="font-family:Georgia,serif;color:#1a2e1a;margin-bottom:8px;">1. Verantwortlicher</h3>
+    <p style="color:#555;line-height:1.8;margin-bottom:24px;">
+      Verantwortlicher im Sinne der Datenschutz-Grundverordnung (DSGVO) ist:<br><br>
+      Andreas Pawlik<br>
+      Andreas' Haus &amp; Garten Service<br>
+      Alte Lünener Straße 92b<br>
+      59077 Hamm<br>
+      Deutschland<br><br>
+      Telefon: <a href="tel:+491798676261" style="color:#2d4a1e;">+49 179 8676261</a><br>
+      E-Mail: <a href="mailto:ahg.dienste@gmail.com" style="color:#2d4a1e;">ahg.dienste@gmail.com</a>
+    </p>
+
+    <h3 style="font-family:Georgia,serif;color:#1a2e1a;margin-bottom:8px;">2. Erhebung und Speicherung personenbezogener Daten</h3>
+    <p style="color:#555;line-height:1.8;margin-bottom:24px;">
+      Beim Besuch dieser Website werden durch den Hosting-Anbieter automatisch Informationen in sogenannten Server-Log-Dateien gespeichert, die Ihr Browser automatisch übermittelt. Dies sind: Browsertyp und -version, verwendetes Betriebssystem, Referrer-URL, Hostname des zugreifenden Rechners sowie Uhrzeit der Serveranfrage. Diese Daten sind nicht bestimmten Personen zuordenbar und werden nicht mit anderen Datenquellen zusammengeführt.
+    </p>
+
+    <h3 style="font-family:Georgia,serif;color:#1a2e1a;margin-bottom:8px;">3. Kontaktaufnahme per E-Mail oder Telefon</h3>
+    <p style="color:#555;line-height:1.8;margin-bottom:24px;">
+      Wenn Sie mich per E-Mail oder Telefon kontaktieren, werden Ihre Angaben (z. B. Name, Telefonnummer, E-Mail-Adresse und Ihre Nachricht) zum Zweck der Bearbeitung Ihrer Anfrage und für den Fall von Anschlussfragen bei mir gespeichert. Diese Daten gebe ich nicht ohne Ihre Einwilligung weiter. Rechtsgrundlage ist Art. 6 Abs. 1 lit. b DSGVO (Vertragsanbahnung) bzw. Art. 6 Abs. 1 lit. f DSGVO (berechtigtes Interesse).
+    </p>
+
+    <h3 style="font-family:Georgia,serif;color:#1a2e1a;margin-bottom:8px;">4. Keine Weitergabe an Dritte</h3>
+    <p style="color:#555;line-height:1.8;margin-bottom:24px;">
+      Ihre personenbezogenen Daten werden nicht an Dritte weitergegeben, verkauft oder vermietet, es sei denn, dies ist zur Vertragserfüllung erforderlich oder Sie haben ausdrücklich eingewilligt.
+    </p>
+
+    <h3 style="font-family:Georgia,serif;color:#1a2e1a;margin-bottom:8px;">5. Cookies</h3>
+    <p style="color:#555;line-height:1.8;margin-bottom:24px;">
+      Diese Website verwendet keine Cookies und keine Tracking-Tools. Es werden keine Analyse- oder Werbedienste Dritter eingesetzt.
+    </p>
+
+    <h3 style="font-family:Georgia,serif;color:#1a2e1a;margin-bottom:8px;">6. Hosting</h3>
+    <p style="color:#555;line-height:1.8;margin-bottom:24px;">
+      Diese Website wird über GitHub Pages (GitHub Inc., 88 Colin P. Kelly Jr. St., San Francisco, CA 94107, USA) gehostet. Beim Abruf dieser Website können daher Daten an Server von GitHub übertragen werden. Weitere Informationen finden Sie in der Datenschutzerklärung von GitHub: <a href="https://docs.github.com/en/site-policy/privacy-policies/github-privacy-statement" target="_blank" style="color:#2d4a1e;">GitHub Privacy Statement</a>.
+    </p>
+
+    <h3 style="font-family:Georgia,serif;color:#1a2e1a;margin-bottom:8px;">7. Ihre Rechte</h3>
+    <p style="color:#555;line-height:1.8;margin-bottom:24px;">
+      Sie haben jederzeit das Recht auf:<br><br>
+      – Auskunft über Ihre bei mir gespeicherten Daten (Art. 15 DSGVO)<br>
+      – Berichtigung unrichtiger Daten (Art. 16 DSGVO)<br>
+      – Löschung Ihrer Daten (Art. 17 DSGVO)<br>
+      – Einschränkung der Verarbeitung (Art. 18 DSGVO)<br>
+      – Datenübertragbarkeit (Art. 20 DSGVO)<br>
+      – Widerspruch gegen die Verarbeitung (Art. 21 DSGVO)<br><br>
+      Zur Ausübung Ihrer Rechte wenden Sie sich bitte an: <a href="mailto:ahg.dienste@gmail.com" style="color:#2d4a1e;">ahg.dienste@gmail.com</a>
+    </p>
+
+    <h3 style="font-family:Georgia,serif;color:#1a2e1a;margin-bottom:8px;">8. Beschwerderecht</h3>
+    <p style="color:#555;line-height:1.8;">
+      Sie haben das Recht, sich bei einer Datenschutz-Aufsichtsbehörde über die Verarbeitung Ihrer personenbezogenen Daten zu beschweren. Zuständig ist die Landesbeauftragte für Datenschutz und Informationsfreiheit Nordrhein-Westfalen (LDI NRW), <a href="https://www.ldi.nrw.de" target="_blank" style="color:#2d4a1e;">www.ldi.nrw.de</a>.
+    </p>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div style="display:flex;align-items:center;gap:12px;">
+    <div class="nav-badge">AHG</div>
+    <span style="color:var(--green-light);font-size:0.85rem;">Andreas' Haus &amp; Garten Service</span>
+  </div>
+  <p>© 2026 Andreas' Haus &amp; Garten Service · <a href="#impressum">Impressum</a> · <a href="#datenschutz">Datenschutz</a></p>
+</footer>
+
+</body>
+</html>
